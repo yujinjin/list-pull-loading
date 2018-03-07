@@ -1,0 +1,12 @@
+node_modules/
+build/
+npm-debug.log
+.project
+.idea/JK724.Mobile.iml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/watcherTasks.xml
+/.bat

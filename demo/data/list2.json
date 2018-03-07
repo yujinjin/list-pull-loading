@@ -1,0 +1,28 @@
+{
+	"result": [
+		{
+			"name": "健康方案",
+			"id": "9b03ec5f-c985-4943-9a97-dc1c11a79c32"
+		}, {
+			"name": "健康故事",
+			"id": "ada8dc25-f14a-4fd6-87b1-d61835de353d"
+		}, {
+			"name": "创始人说",
+			"id": "da89d623-9ef0-4209-a18a-62ec033c24dd"
+		}, {
+			"name": "健康资讯",
+			"id": "068766b0-462c-4fa2-8167-156837335403"
+		}, {
+			"name": "荣耀之旅",
+			"id": "a0876344-f230-42e6-87e6-a854ef8a9bb7"
+		}, {
+			"name": "达人分享",
+			"id": "ca174e3f-be22-43f5-8ce7-1fe34ea6fb69"
+		}
+	],
+	"targetUrl": null,
+	"success": true,
+	"error": null,
+	"unAuthorizedRequest": false,
+	"__abp": true
+}
