@@ -304,6 +304,7 @@
     		
     		.slider-item {
     			height: 100%;
+    			border-top: 1px solid #e4e4e4;
     			display: none;
     			
     			&.active {

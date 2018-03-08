@@ -7,9 +7,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vueApp from "./app"
 import Vuex from 'vuex'
-import ListPullLoading from '../src/index'
-//import ListPullLoading from '../dist/list-pull-loading'
-//import "../dist/list-pull-loading.css"
+import ListPullLoading from '../dist/list-pull-loading'
+import "../dist/list-pull-loading.css"
 import vueLazyload from './lib/vue-lazyload'
 
 Vue.use(VueRouter);

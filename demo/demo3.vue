@@ -243,6 +243,7 @@
     		.slider-item {
     			height: 100%;
     			display: none;
+    			border-top: 1px solid #e4e4e4;
     			
     			&.active {
     				display: block;

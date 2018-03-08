@@ -527,7 +527,7 @@
     				}
         		});
 	        },
-	        // 刷新滚动条，用于供外部调用
+	        // 刷新数据列表，用于供外部调用
 	        refresh(){
 	        	if(this.isLoading) {
 	        		// 正在加载中
@@ -616,6 +616,10 @@
 	        		e.preventDefault();
 	        		e.stopPropagation();
 	        	}
+	        },
+	        // 销毁
+	        destroy(){
+	        	if(this.myScroll) this.myScroll.destroy();
 	        }
 	    },
 	    destroyed(){
@@ -623,7 +627,7 @@
 	    }
     }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 	.list-pull-loading {
 		width: 100%;
 		height: 100%;

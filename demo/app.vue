@@ -137,8 +137,8 @@ export default {
     		width: 100%;
     		
     		&.content {
-    			margin-top: 44px;
-    			min-height: calc(~'100vh - 44px');
+    			margin-top: 45px;
+    			min-height: calc(~'100vh - 45px');
     		}
 		}
 	}
