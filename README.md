@@ -1,11 +1,13 @@
 ## 前言
-list-pull-loading是一个基于VUE实现的下拉刷新上拉加载的组件。主使用IScroll（iscroll-probe）来实现，提供了项目中数据列表经常会用到的下拉提示信息、上拉提示信息、图片懒加载、回到顶部，其提示信息UI、内容可灵活配置，可使用提供的默认样式也可以自定义也可以隐藏。
+list-pull-loading是一个基于VUE实现的下拉刷新，上拉加载的组件，支持图片懒加载，数据缓存（返回列表页记住当前位置）。主使用IScroll（iscroll-probe）来实现，提供了项目中数据列表经常会用到的下拉提示信息、上拉提示信息、图片懒加载、回到顶部，其提示信息UI、内容可灵活配置，可使用提供的默认样式也可以自定义也可以隐藏。
 
 列表初始化时也做了优化，对于没有列表数据时显示没有数据的提示信息（可自定义），对于首次加载的数据没有超过一屏时会自动加载下一页的数据，但最多只会自动加载2次（可配置）。
 
 
 
 ## 示例
+demo使用了vue2+vuex3+vue-router3，对于图片懒加载使用的是vue-lazyload第三方插件。
+
 [示例一](https://yujinjin.github.io/list-pull-loading)
 
 ![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/040A526107FE42D28DC0C671084467A0/3908)
@@ -56,6 +58,7 @@ npm install list-pull-loading
 - IScroll(iscroll-probe)
 ## CDN
 https://apps.bdimg.com/libs/list-pull-loading/1.0.0/list-pull-loading.js
+
 https://apps.bdimg.com/libs/list-pull-loading/1.0.0/list-pull-loading.css
 ```html
 <script src="https://apps.bdimg.com/libs/list-pull-loading/1.0.0/list-pull-loading.js"></script>
@@ -180,6 +183,7 @@ view层举例
 ```
 4. 由于list-pull-loading组件的滚动不是body上滚动而是在内部盒子里滚动，所以在定义内部的盒子高度，特别是页面内局部滚动。
 
+![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/16E8C8F333944E5C9C65A572EA0A29A6/4167)
 
 ## 配置选项
 
