@@ -1,5 +1,5 @@
 ## 前言
-list-pull-loading是一个基于VUE实现的下拉刷新，上拉加载的组件，支持图片懒加载，数据缓存（返回列表页记住当前位置）。主使用IScroll（iscroll-probe）来实现，提供了项目中数据列表经常会用到的下拉提示信息、上拉提示信息、图片懒加载、回到顶部，其提示信息UI、内容可灵活配置，可使用提供的默认样式也可以自定义也可以隐藏。
+[list-pull-loading](https://github.com/yujinjin/list-pull-loading)是一个基于VUE实现的下拉刷新，上拉加载的组件，支持图片懒加载，数据缓存（返回列表页记住当前位置）。主使用IScroll（iscroll-probe）来实现，提供了项目中数据列表经常会用到的下拉提示信息、上拉提示信息、图片懒加载、回到顶部，其提示信息UI、内容可灵活配置，可使用提供的默认样式也可以自定义也可以隐藏。
 
 列表初始化时也做了优化，对于没有列表数据时显示没有数据的提示信息（可自定义），对于首次加载的数据没有超过一屏时会自动加载下一页的数据，但最多只会自动加载2次（可配置）。
 
@@ -8,25 +8,29 @@ list-pull-loading是一个基于VUE实现的下拉刷新，上拉加载的组件
 ## 示例
 demo使用了vue2+vuex3+vue-router3，对于图片懒加载使用的是vue-lazyload第三方插件。
 
-[示例一](https://yujinjin.github.io/list-pull-loading)
+[首页](https://yujinjin.github.io/list-pull-loading/#/)
+
+![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/48BF2C9DD0B546779955D19222F1D8FA/4296)
+
+[示例一](https://yujinjin.github.io/list-pull-loading/#/demo1)
 
 ![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/040A526107FE42D28DC0C671084467A0/3908)
 
 说明：普通示例
 
-[示例二](https://yujinjin.github.io/list-pull-loading)
+[示例二](https://yujinjin.github.io/list-pull-loading/#/demo2)
 
 ![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/4AAE2CB68982409A95EBEE1F9476CA3C/3915)
 
 说明：多个tap分类数据列表
 
-[示例三](https://yujinjin.github.io/list-pull-loading)
+[示例三](https://yujinjin.github.io/list-pull-loading/#/demo3)
 
 ![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/105DA40582E24A91B11BF663F9173F0F/3918)
 
 说明：数据列表中有图片而且图片还使用了懒加载的方式。
 
-[示例四](https://yujinjin.github.io/list-pull-loading)
+[示例四](https://yujinjin.github.io/list-pull-loading/#/demo4)
 
 ![image](https://note.youdao.com/yws/public/resource/8cea9a8eae140b99ef9a0843d5a96d81/xmlnote/6749738410B64D9696EA2A6563BCA338/3923)
 

@@ -3,7 +3,7 @@
 		<ul class="list-panel">
 			<li>
 				<router-link :to="{name: 'demo1'}">
-					<img src="/demo/imgs/demo1.jpeg">
+					<img src="./imgs/demo1.jpeg">
 					<div class="text-describe">
 						demo1:普通的数据列表，列表占整个页面内容。
 					</div>
@@ -11,7 +11,7 @@
 			</li>
 			<li>
 				<router-link :to="{name: 'demo2'}">
-					<img src="/demo/imgs/demo2.jpeg"/>
+					<img src="./imgs/demo2.jpeg"/>
 					<div class="text-describe">
 						demo2:带tab分类的数据列表
 					</div>
@@ -19,7 +19,7 @@
 			</li>
 			<li>
 				<router-link :to="{name: 'demo3'}">
-					<img src="/demo/imgs/demo3.jpeg"/>
+					<img src="./imgs/demo3.jpeg"/>
 					<div class="text-describe">
 						demo3:带图片懒加载数据列表，目前demo的图片懒加载使用的是vue-azyload插件。
 					</div>
@@ -27,7 +27,7 @@
 			</li>
 			<li>
 				<router-link :to="{name: 'demo4'}">
-					<img src="/demo/imgs/demo4.jpeg"/>
+					<img src="./imgs/demo4.jpeg"/>
 					<div class="text-describe">
 						demo4:算是数据缓存的解决方案吧，主要是解决用户点击列表的链接跳转出该页面再返回时还原到上次点击列表中的位置，这样增加用户体验方便用户操作。
 					</div>

@@ -91,7 +91,7 @@ var router = new VueRouter({
 		meta: {title: "demo4"},
 		component: require('./demo4.vue').default
 	}],
-	mode: 'history',
+	mode: 'hash',
 	base: "/",
 	linkActiveClass: "router-link-active"
 });

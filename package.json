@@ -10,7 +10,8 @@
 	},
 	"scripts": {
 		"demo": "webpack --config config/demo.config.js",
-		"compile":"set NODE_ENV=production&&webpack --config config/build.config.js"
+		"build": "webpack --config config/build.config.js",
+		"compile":"set NODE_ENV=production&&webpack --config config/compile.config.js"
 	},
 	"keywords": [
 	    "vue",
