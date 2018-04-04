@@ -336,7 +336,12 @@
 	        },
 	        // 初始化iScroll组件
 	        initIScroll(){
-	        	let _this = this;
+	        	let _this = this, _scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
+	        	if(_scrollerMinHeight > this.scrollerMinHeight) {
+	        		// 初始化时再检查一下容器的高度，因为andriod的键盘弹起时会导致高度计算错误，所以这里重新计算一下
+	        		this.scrollerMinHeight = _scrollerMinHeight;
+	        		this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
+	        	}
 	        	//设置子元素的最低高度，这样，该区域在内容少的时候，也可以执行下拉刷新
 	        	this.myScroll = new IScroll(this.$refs["scroller"], this.iScrollOptions);
 	        	this.myScroll.on('scrollStart', function () {
@@ -457,7 +462,7 @@
 	        		if(_this.myScroll) {
 		        		_this.myScroll.refresh();
 		        	}
-	        		if(this.imgResize) {
+	        		if(this.imgResize && this.$refs["scroller"]) {
 		        		let _this = this, _timer_id = -1, _resolve_timer_id = -1, _el_length = this.$refs["scroller"].querySelectorAll("img[lazy='loading']").length;
 		        		if(_el_length === 0) {
 		        			// 没有懒加载的图片
@@ -502,11 +507,13 @@
 	                y = this.myScroll.maxScrollY + this.upElHeight;
 	            }
 	            // 滚动跳转会触发scrollEnd时间，所以重新初始化开始时间，延迟300ms
-	            this.startPullTime =  new Date().getTime() + 300;
+	            // 还发现一个诡异的地方就是andriod在做搜索查询时键盘弹起会延迟300ms，导致循环调用downRefreshEvent方法，所以这里直接设置1000ms
+	            this.startPullTime =  new Date().getTime() + 1000;
 	            this.myScroll.scrollTo(0, y, 300, IScroll.utils.ease.quadratic);
 	        },
 	        // API查询 type: 0-初始化,1-上拉加载,2-下拉刷新
 	        query(type){
+	        	console.info("query.......");
 	        	if(type === 1) {
 	        		this.parameters.skipCount += this.parameters.maxResultCount;
 	        	} else if(type === 2 || type === 0) {
@@ -529,6 +536,13 @@
 	        },
 	        // 刷新数据列表，用于供外部调用
 	        refresh(){
+	        	let _scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
+	        	if(_scrollerMinHeight > this.scrollerMinHeight) {
+	        		console.info(_scrollerMinHeight);
+	        		// 初始化时再检查一下容器的高度，因为andriod的键盘弹起时会导致高度计算错误，所以这里重新计算一下
+	        		this.scrollerMinHeight = _scrollerMinHeight;
+	        		this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
+	        	}
 	        	if(this.isLoading) {
 	        		// 正在加载中
 	        		return Promise.resolve(false);
@@ -632,6 +646,9 @@
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
 		
 		.loading-mask {
 			height: 100%;
@@ -655,6 +672,7 @@
 		
 		.list-pull-loading-box {
 			position: relative;
+			flex: 1;
 			/*overflow: hidden;*/
 			height: 100%;
 			/* Prevent native touch events on Windows */
@@ -663,6 +681,7 @@
 			
 			.list-pull-loading-scroller {
 				min-height: auto;
+				/*height: 100%; 这里不能设置高度，因为iScroll设置100%无法获取到准确位置*/
 				position: absolute;
 				/* Prevent elements to be highlighted on tap */
 				-webkit-tap-highlight-color: rgba(0,0,0,0);
