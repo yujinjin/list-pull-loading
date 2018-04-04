@@ -513,7 +513,6 @@
 	        },
 	        // API查询 type: 0-初始化,1-上拉加载,2-下拉刷新
 	        query(type){
-	        	console.info("query.......");
 	        	if(type === 1) {
 	        		this.parameters.skipCount += this.parameters.maxResultCount;
 	        	} else if(type === 2 || type === 0) {
@@ -538,7 +537,6 @@
 	        refresh(){
 	        	let _scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
 	        	if(_scrollerMinHeight > this.scrollerMinHeight) {
-	        		console.info(_scrollerMinHeight);
 	        		// 初始化时再检查一下容器的高度，因为andriod的键盘弹起时会导致高度计算错误，所以这里重新计算一下
 	        		this.scrollerMinHeight = _scrollerMinHeight;
 	        		this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
