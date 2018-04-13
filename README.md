@@ -149,6 +149,11 @@ new Vue({
 view层举例
 ```html
 <list-pull-loading :options="options" ref="listPullLoading">
+    <!-- 自定义下拉刷新(不写就显示默认的) -->
+    <template slot="down">
+        ...
+    </template>
+    <!-- 数据列表 -->
 	<template slot="list">
 		<ul>
 			<li v-for="(dataItem,dataIndex) in dataList" :key="dataItem.id">
@@ -158,6 +163,14 @@ view层举例
 			</li>
 		</ul>
 	</template>
+	<!-- 自定义没有数据时显示的内容(不写就显示默认的) -->
+	 <template slot="nodata">
+        ...
+    </template>
+    <!-- 自定义上拉加载显示(不写就显示默认的) -->
+	 <template slot="up">
+        ...
+    </template>
 </list-pull-loading>
 ```
 注意
