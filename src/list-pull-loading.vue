@@ -533,13 +533,21 @@
     				}
         		});
 	        },
-	        // 刷新数据列表，用于供外部调用
-	        refresh(){
+	        /**
+	         * 刷新数据列表，用于供外部调用,
+	         * @param {Boolean} isLoadData 是否需要重新加载数据
+	         * TODO: 还未实现
+	         */ 
+	        refresh(isLoadData = true){
 	        	let _scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
 	        	if(_scrollerMinHeight > this.scrollerMinHeight) {
 	        		// 初始化时再检查一下容器的高度，因为andriod的键盘弹起时会导致高度计算错误，所以这里重新计算一下
 	        		this.scrollerMinHeight = _scrollerMinHeight;
 	        		this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
+	        	}
+	        	if(isLoadData === false) {
+	        		this.myScroll.refresh();
+	        		return;
 	        	}
 	        	if(this.isLoading) {
 	        		// 正在加载中
