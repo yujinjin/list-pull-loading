@@ -546,7 +546,7 @@
 	        		this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
 	        	}
 	        	if(isLoadData === false) {
-	        		this.myScroll.refresh();
+	        		if(this.myScroll) this.myScroll.refresh();
 	        		return;
 	        	}
 	        	if(this.isLoading) {
