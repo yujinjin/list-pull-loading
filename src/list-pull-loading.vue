@@ -221,6 +221,7 @@
     				if(newVal.auto === true && this.auto != true) {
     					this.auto = true;
     					this.updateUpState(2);
+    					this.isLoading = true;
     					this.query(2).then(()=>{
     						if(this.up.state != 3) this.updateUpState(0);
 		        			this.initMaxScroller(this.initMaxTimes - 1);
@@ -321,8 +322,9 @@
 		        	// 最小高度要加1，防止数据少一屏时IScroller无法滑动问题
 		        	this.scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
 		        	this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
-		        	if(this.auto) {
-		        		// TODO: 初始化时首先判断一下有没有数据或者数据多不多（多不多的标准是第一次加载数据时有没有超过一屏）
+		        	if(this.auto && this.isLoading != true) {
+		        		// 必须要判断当前的数据是否正在加载，如果正在加载就不做查询。存在这种情况的原因是父级在mounted生命周期里对于parameters重新赋值，导致watch options变化重新加载，这样就造成刷新2遍了。
+		        		// 初始化时首先判断一下有没有数据或者数据多不多（多不多的标准是第一次加载数据时有没有超过一屏）
 		        		this.updateUpState(2);
 		        		this.isLoading = true;
 		        		this.query(0).then(()=>{
