@@ -533,6 +533,8 @@
     				} else if(type === 2) {
     					return this.restartIScroll();
     				}
+        		}).catch(e => {
+        			this.isLoading = false;
         		});
 	        },
 	        /**
