@@ -221,7 +221,6 @@
     				if(newVal.auto === true && this.auto != true) {
     					this.auto = true;
     					this.updateUpState(2);
-    					this.isLoading = true;
     					this.query(2).then(()=>{
     						if(this.up.state != 3) this.updateUpState(0);
 		        			this.initMaxScroller(this.initMaxTimes - 1);
@@ -326,10 +325,8 @@
 		        		// 必须要判断当前的数据是否正在加载，如果正在加载就不做查询。存在这种情况的原因是父级在mounted生命周期里对于parameters重新赋值，导致watch options变化重新加载，这样就造成刷新2遍了。
 		        		// 初始化时首先判断一下有没有数据或者数据多不多（多不多的标准是第一次加载数据时有没有超过一屏）
 		        		this.updateUpState(2);
-		        		this.isLoading = true;
 		        		this.query(0).then(()=>{
 		        			if(this.up.state != 3) this.updateUpState(0);
-		        			this.isLoading = false;
 		        			this.initMaxScroller(this.initMaxTimes - 1);
 		        		});
 		        	}
@@ -411,9 +408,7 @@
 	        	// 如果当前加载的次数大于0 且数据还可以再加载且当前的数据没有超过一屏
 	        	if(maxTimes >= 0 && this.up && this.up.state !== 3 && this.myScroll.maxScrollY >= -this.downElHeight - this.upElHeight) {
 	        		this.updateUpState(2);
-	        		this.isLoading = true;
     				return this.query(1).then(()=>{
-    					this.isLoading = false;
         				this.updateUpState(0);
     					return this.initMaxScroller(maxTimes - 1);
     				});
@@ -521,7 +516,9 @@
 	        		this.lastQueryTime = new Date().getTime();
 	        		this.parameters.skipCount = 0;
 	        	}
+	        	this.isLoading = true;
 	        	return this.api(this.parameters, type === 1).then((listLength)=>{
+	        		this.isLoading = false;
 	        		this.hasData = !(type != 1 && listLength === 0);
 	        		if(listLength < this.parameters.maxResultCount) this.updateUpState(3);
         			return this.$nextTick();
@@ -575,12 +572,10 @@
 	        		// 正在加载中
 	        		return;
 	        	}
-				this.isLoading = true;
 	        	return this.query(2).then(()=>{
 	        		if(this.myScroll.y > -this.downElHeight){
 	        			this.resizeIScrollPosition();
 	        		}
-        			this.isLoading = false;
         			this.updateDownState(0);
         			this.initMaxScroller(this.initMaxTimes - 1);
 	        	});
@@ -593,10 +588,8 @@
 	        		// 正在加载中
 	        		return;
 	        	}
-				this.isLoading = true;
 				let _myScrollY = this.myScroll.maxScrollY;
 	        	this.query(1).then(()=>{
-        			this.isLoading = false;
         			if(this.up.state != 3) {
         				this.updateUpState(0);
         			} 
