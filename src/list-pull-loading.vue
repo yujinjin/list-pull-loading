@@ -421,7 +421,7 @@
 	         * @param {Number} y 当前滚动条的距离
 	         * @param {Number} upState 当前下拉的状态
 	         */
-	        initIScrollCacheData(y=0, upState=0){
+	        initIScrollCacheData(y=0, upState=0, hasData=true){
 	        	let _this = this;
 	        	let scrollTo = function(scrollY){
 	        		if(scrollY > -_this.downElHeight) {
@@ -434,6 +434,10 @@
 					return scrollY;
 	        	}
 	        	this.updateUpState(upState);
+	        	if(!hasData) {
+	        		this.hasData = hasData;
+	        		return;
+	        	}
 	        	this.$nextTick(()=>{
         			this.restartIScroll().then(()=>{
         				if(scrollTo(y) != y && this.imgResize) {
