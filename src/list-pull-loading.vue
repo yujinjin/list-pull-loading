@@ -420,6 +420,7 @@
 	         * 初始化IScroll缓存数据
 	         * @param {Number} y 当前滚动条的距离
 	         * @param {Number} upState 当前下拉的状态
+	         * @return {Promise} 返回Promise，避免页面出现突然滚动这种不友好的场景
 	         */
 	        initIScrollCacheData(y=0, upState=0, hasData=true){
 	        	let _this = this;
@@ -438,8 +439,8 @@
 	        		this.hasData = hasData;
 	        		return;
 	        	}
-	        	this.$nextTick(()=>{
-        			this.restartIScroll().then(()=>{
+	        	return this.$nextTick().then(() => {
+        			return this.restartIScroll().then(()=>{
         				if(scrollTo(y) != y && this.imgResize) {
         					//由于图片懒加载问题，特别是当前列表特别多而且位置很偏下，这样就会让没有展示的图片高度导致图片计算出来的高度不准，目前没有找到好的解决方案，暂时就这样解决。
         					this.myScrollRefresh().then(()=>{
