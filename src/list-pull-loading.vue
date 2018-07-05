@@ -508,10 +508,15 @@
 	                // 最大滚动高度
 	                y = this.myScroll.maxScrollY + this.upElHeight;
 	            }
-	            // 滚动跳转会触发scrollEnd时间，所以重新初始化开始时间，延迟300ms
-	            // 还发现一个诡异的地方就是andriod在做搜索查询时键盘弹起会延迟300ms，导致循环调用downRefreshEvent方法，所以这里直接设置1000ms
-	            this.startPullTime =  new Date().getTime() + 1000;
-	            this.myScroll.scrollTo(0, y, 300, IScroll.utils.ease.quadratic);
+	            if(this.myScroll.maxScrollY == 0) {
+	            	// 当前上拉下拉加载组件异常，可能是元素已经被隐藏掉了导致获取当前滚动的最大高度是0，所以就直接去除滚动动画效果
+	            	this.myScroll.scrollTo(0, y, 0);
+	            } else {
+	            	// 滚动跳转会触发scroll、scrollEnd时间，所以重新初始化开始时间，延迟300ms
+		            // 还发现一个诡异的地方就是andriod在做搜索查询时键盘弹起会延迟300ms，导致循环调用downRefreshEvent方法，所以这里直接设置1000ms
+		            this.startPullTime =  new Date().getTime() + 1000;
+		            this.myScroll.scrollTo(0, y, 300, IScroll.utils.ease.quadratic);
+	            }
 	        },
 	        // API查询 type: 0-初始化,1-上拉加载,2-下拉刷新
 	        query(type){
