@@ -2,7 +2,7 @@
 	<!--:class="{'disabled-iscroll': isLoading}"-->
 	<div class="list-pull-loading">
 		<div class="loading-mask" v-show="isLoading" @touch.stop.prevent></div>
-		<slot name="goTop">
+		<slot name="goTop" :isCanToTop="isCanToTop">
 			<transition name="fade">
 			<div class="go-top" @click.stop.prevent="gotoTop" v-if="isShowToTop && isCanToTop">
 				<img src="./imgs/top.png"/>
@@ -12,7 +12,7 @@
 		<div class="list-pull-loading-box" ref="scroller">
 			<div class="list-pull-loading-scroller">
 				<!-- 下拉刷新显示 -->
-				<slot name="down">
+				<slot name="down" :down="down">
 					<!-- 这里要用过渡动画3种状态 -->
 					<div class="pull-down-tips" v-show="down != false" :class="{'loading': down.state !== 0, 'down-margin': myScroll === null}">
 						<div class="tips-content">
@@ -80,7 +80,7 @@
                 	</div>
 				</slot>
 				<!-- 上拉加载显示 -->
-				<slot name="up" v-if="hasData">
+				<slot name="up" v-if="hasData" :up="up">
 					<!-- 这里要用过渡动画3种状态 -->
 					<div class="pull-up-tips" v-show="up != false">
 						<div class="tips-content">
@@ -364,6 +364,7 @@
 						// 上拉复位
 						_this.updateUpState(0);
 					}
+					_this.$emit("scroll", this, _this);
 				});
 				this.myScroll.on("scrollEnd",function(){
 					// directionY -1:向下 0:未变 1:向上
@@ -373,6 +374,7 @@
 					if(_this.isShowToTop) {
 						_this.isCanToTop = (-this.y >= _this.scrollerMinHeight * 0.5);
 					}
+					_this.$emit("scrollEnd", this, _this);
 					if(_this.endPullTime - _this.startPullTime < 0) {
 						// 解决连续下拉拖动会多次调用resizeIScrollPosition方法导致下拉元素回位位置不正确问题
 						return;
