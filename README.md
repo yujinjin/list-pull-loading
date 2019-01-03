@@ -209,12 +209,12 @@ view层举例
 `isShowToTop` | 是否显示去顶部图标，默认显示 | `true` | `Boolean`
 `initMaxTimes` | 初始化列表数据时，如果当前有足够的列表数据但查询的数据不足以覆盖到当前容器的底部会自动进行下一页数据加载，最多自动加载3次（包含初次）。<br><br>比如：数据初始化时每次只查询出5条数据，但实际当前的容器盒子需要13条数据才会覆盖到底部，这个时候组件会自动判断如果没有覆盖到底部会自动加载下一页。| `3` | `Number`
 `noDataText` | 没有列表数据时的文案展示 | `没有找到相关的内容哦~` | `String`
-`api` | 当前数据列表API函数，函数的返回值必须是Promise类型，必须配置。 | `null` | `Function`
+`api` | 当前数据列表API函数，会传入2个参数，parameters：当前列表查询参数, isLoadingMore：是否是重新加载。==函数的返回值必须是Promise类型，而且是必须配置，如果不配置会抛出"错误的API"异常==。 | `null` | `Function`
 `auto` | 是否自动查询，默认初始化会自动加载API数据 | `true` | `Boolean`
 `imgResize` | 是否自动查询图片自适应，默认为false。最好不要设置为true，因为比较消耗资源。<br><br>原因是：true的情况下是应用于列表数据里有懒加载的图片但没有指定图片大小导致iScroll计算高度不准确需要的等图片加载完之后再重新计算高度。<br><br>当前都是通过监控图片的onload事件来刷新的，这样真的不爽但也没找到其他好的解决方案，所以最好是列表中有图片加载时就预先把高度预算好 | `true` | `Boolean`
 `iScrollOptions` | iscroll的配置选项。<br><br>其中probeType的配置选项为3，否则拖动太快就监控不到。 | `{probeType: 3, mouseWheel: false, disableMouse: true, scrollbars: false, preventDefault: true, startY: 0}` | 具体可自行查询iscroll的[API](http://iscrolljs.com/)
-`down` | 下拉刷新配置选项。<br><br>offset：列表下拉滚动的偏移px数量(number类型),即可触发下拉刷新的回调<br><br> initText：初始化文案，这个是在当前下来滚动未超过指定的值时显示文案 <br><br>notReleaseText:释放滚动加载时当前下拉高度还未回弹时的文案<br><br>loadingText:数据正在加载时的文案<br><br>state:当前加载时的状态(number类型)。0:初始化状态 1：未释放滚动加载时 2：正在加载时<br><br>isShowLastTimeText:是否显示最后更新时间提示| `down: {offset: 50, initText: "下拉刷新", notReleaseText: "松开刷新", loadingText: "正在加载更多", state: 0, isShowLastTimeText: true}` | `Object`
-`up` | 上拉加载配置选项。<br><br>offset：列表上拉加载滚动的偏移px数量(number类型),即可触发加载数据的回调<br><br>initText：初始化文案，当上拉高度未超过指定的高度时<br><br>notReleaseText:未释放滚动加载时的文案，当前上拉高度超过指定的高度时且还未释放滚动时。<br><br>loadingText: 上拉API正在加载时的文案<br><br>noMoreText:没有数据时的文案<br><br>state:0:初始化状态 1：未释放滚动加载时 2：正在加载时 3: 没有更多数据了| `up: {offset: 50, initText: "上拉加载更多", notReleaseText: "松开加载更多", loadingText: "正在加载更多", noMoreText: "没有更多数据了...", state: 0}` | `Object`
+`down` | 下拉刷新配置选项，==如果为false就禁止下拉==。<br><br>offset：列表下拉滚动的偏移px数量(number类型),即可触发下拉刷新的回调<br><br> initText：初始化文案，这个是在当前下来滚动未超过指定的值时显示文案 <br><br>notReleaseText:释放滚动加载时当前下拉高度还未回弹时的文案<br><br>loadingText:数据正在加载时的文案<br><br>state:当前加载时的状态(number类型)。0:初始化状态 1：未释放滚动加载时 2：正在加载时<br><br>isShowLastTimeText:是否显示最后更新时间提示| `down: {offset: 50, initText: "下拉刷新", notReleaseText: "松开刷新", loadingText: "正在加载更多", state: 0, isShowLastTimeText: true}` | `Object`
+`up` | 上拉加载配置选项，==如果为false就禁止上拉加载==。<br><br>offset：列表上拉加载滚动的偏移px数量(number类型),即可触发加载数据的回调<br><br>initText：初始化文案，当上拉高度未超过指定的高度时<br><br>notReleaseText:未释放滚动加载时的文案，当前上拉高度超过指定的高度时且还未释放滚动时。<br><br>loadingText: 上拉API正在加载时的文案<br><br>noMoreText:没有数据时的文案<br><br>state:0:初始化状态 1：未释放滚动加载时 2：正在加载时 3: 没有更多数据了| `up: {offset: 50, initText: "上拉加载更多", notReleaseText: "松开加载更多", loadingText: "正在加载更多", noMoreText: "没有更多数据了...", state: 0}` | `Object`
 `parameters` | API数据参数，默认只有maxResultCount:每次分页数据加载多少条，skipCount:每次查询数据的开始索引2个参数 | `{maxResultCount: 20, skipCount: 0}` | `Object`
 
 ## API
@@ -233,8 +233,33 @@ this.$refs['listPullLoading'].initIScrollCacheData(y=0, upState=0);//y 当前滚
 ###### 3. destroy
 组件销毁
 
+## Event
+###### 1. scroll
+当前列表滚动时的事件。传入2个参数，listPullLoadingObject:当前组件对象，iscrollObject:当前组件内的iscroll对象
+
 ```javascript
-this.$refs['listPullLoading'].destroy();//listPullLoading是组件注册引用名称
+<list-pull-loading @scroll="scrolling" ..>
+```
+
+###### 2. scrollEnd
+当前列表滚动结束时的事件。传入2个参数，listPullLoadingObject:当前组件对象，iscrollObject:当前组件内的iscroll对象
+
+```javascript
+<list-pull-loading @scrollEnd="scrollEnd" ..>
+```
+
+###### 3. down
+下拉刷新事件，iscrollObject:当前组件内的iscroll对象
+
+```javascript
+<list-pull-loading @down="downEvent" ..>
+```
+
+###### 4. up
+上拉加载事件，iscrollObject:当前组件内的iscroll对象
+
+```javascript
+<list-pull-loading @up="upEvent" ..>
 ```
 
 ## 最后
