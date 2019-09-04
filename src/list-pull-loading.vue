@@ -315,12 +315,7 @@
 	        		Object.assign(this.parameters, _options.parameters);
 	        	}
 	        	this.$nextTick(()=>{
-	        		this.downElHeight = this.$refs["scroller"].querySelector(".pull-down-tips") ? this.$refs["scroller"].querySelector(".pull-down-tips").offsetHeight : 0;
-		        	this.upElHeight = this.$refs["scroller"].querySelector(".pull-up-tips") ? this.$refs["scroller"].querySelector(".pull-up-tips").offsetHeight : 0;
-		        	this.iScrollOptions.startY = -this.downElHeight;
-		        	// 最小高度要加1，防止数据少一屏时IScroller无法滑动问题
-		        	this.scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
-		        	this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
+	        		this.initDom();
 		        	if(this.auto && this.isLoading != true) {
 		        		// 必须要判断当前的数据是否正在加载，如果正在加载就不做查询。存在这种情况的原因是父级在mounted生命周期里对于parameters重新赋值，导致watch options变化重新加载，这样就造成刷新2遍了。
 		        		// 初始化时首先判断一下有没有数据或者数据多不多（多不多的标准是第一次加载数据时有没有超过一屏）
@@ -333,14 +328,25 @@
 	        	});
 	        	
 	        },
+			// 初始化dom
+			initDom(){
+				this.downElHeight = this.$refs["scroller"].querySelector(".pull-down-tips") ? this.$refs["scroller"].querySelector(".pull-down-tips").offsetHeight : 0;
+				this.upElHeight = this.$refs["scroller"].querySelector(".pull-up-tips") ? this.$refs["scroller"].querySelector(".pull-up-tips").offsetHeight : 0;
+				this.iScrollOptions.startY = -this.downElHeight;
+				// 最小高度要加1，防止数据少一屏时IScroller无法滑动问题
+				this.scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
+				this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
+			},
 	        // 初始化iScroll组件
 	        initIScroll(){
-	        	let _this = this, _scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
-	        	if(_scrollerMinHeight > this.scrollerMinHeight) {
-	        		// 初始化时再检查一下容器的高度，因为andriod的键盘弹起时会导致高度计算错误，所以这里重新计算一下
-	        		this.scrollerMinHeight = _scrollerMinHeight;
-	        		this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
-	        	}
+	        	// let _this = this, _scrollerMinHeight = this.$refs["scroller"].offsetHeight - (this.iScrollOptions.startY < 0 ? this.iScrollOptions.startY : -1);
+	        	// if(_scrollerMinHeight > this.scrollerMinHeight) {
+	        	// 	// 初始化时再检查一下容器的高度，因为andriod的键盘弹起时会导致高度计算错误，所以这里重新计算一下
+	        	// 	this.scrollerMinHeight = _scrollerMinHeight;
+	        	// 	this.$refs["scroller"].querySelector(".list-pull-loading-scroller").style.minHeight = this.scrollerMinHeight + "px";
+				// }
+				let _this = this;
+				this.initDom();
 	        	//设置子元素的最低高度，这样，该区域在内容少的时候，也可以执行下拉刷新
 	        	this.myScroll = new IScroll(this.$refs["scroller"], this.iScrollOptions);
 	        	this.myScroll.on('scrollStart', function () {
@@ -459,10 +465,16 @@
 	        		return this.myScrollRefresh();
 	        	}
 	        },
-	        // myScroll刷新
-	        myScrollRefresh(){
+	        /**
+			 * myScroll刷新
+			 * @param refresh 是否初始化dom
+			 */
+	        myScrollRefresh(isInitDom=false){
 	        	let _this = this;
 	        	return new Promise((resolve, reject) => {
+					if(isInitDom) {
+						this.initDom();
+					}
 	        		if(_this.myScroll) {
 		        		_this.myScroll.refresh();
 		        	}
