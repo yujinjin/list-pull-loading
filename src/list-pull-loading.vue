@@ -597,11 +597,15 @@
 	        		return;
 	        	}
 	        	return this.query(2).then(()=>{
-	        		if(this.myScroll.y > -this.downElHeight){
-	        			this.resizeIScrollPosition();
-	        		}
-        			this.updateDownState(0);
-        			this.initMaxScroller(this.initMaxTimes - 1);
+					this.$nextTick(() => {
+						// 这里要初始化一遍dom,因为如果上次没有数据，下次刷新又有数据了不初始化dom会导致upElHeight一直是0，然后无法上拉加载数据
+						this.initDom();
+						if(this.myScroll.y > -this.downElHeight){
+							this.resizeIScrollPosition();
+						}
+						this.updateDownState(0);
+						this.initMaxScroller(this.initMaxTimes - 1);
+					});
 	        	});
 	        },
 	        // 上拉加载
