@@ -8,12 +8,12 @@
 			</div>
 		</div>
 		<div class="slider-group">
-			<div class="slider-item" v-for="(typeItem, index) in typeList" :class="{active: index===currentTypeIndex}">
+			<div class="slider-item" v-for="(typeItem, index) in typeList" :key="index" :class="{active: index===currentTypeIndex}">
 				<div class="scroll-wrapper">
 					<list-pull-loading :options="options[index]" v-if="typeItem.materialsList" :ref="'listPullLoading' + index">
-						<template slot="list">
+						<template v-slot:list>
 							<ul class="media-list">
-								<li v-for="(dataItem,dataIndex) in typeItem.materialsList" :key="dataItem.id" class="media-list-box">
+								<li v-for="dataItem in typeItem.materialsList" :key="dataItem.id" class="media-list-box">
 									<a @click.stop.prevent="gotoDemo3">
 										<img v-lazy="dataItem.imgUrl">
 										<div class="item-media-body">
@@ -199,7 +199,10 @@
 			}
 		},
 		beforeDestroy(){
-			let listPullLoading = this.$refs['listPullLoading' + this.currentTypeIndex][0];
+			let listPullLoading = this.$refs['listPullLoading' + this.currentTypeIndex];
+			if(listPullLoading && !listPullLoading.api) {
+				listPullLoading = listPullLoading[0];
+			}
 			let typeList = JSON.parse(JSON.stringify(this.typeList));
 			typeList.forEach((item, index) => {
 				if(item.materialsList && index != this.currentTypeIndex) {

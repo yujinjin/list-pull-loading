@@ -1,9 +1,9 @@
 <template>
 	<div class="demo1">
 		<list-pull-loading :options="options" ref="listPullLoading">
-			<template slot="list">
+			<template v-slot:list>
 				<ul class="media-list">
-					<li v-for="(dataItem,dataIndex) in dataList" :key="dataItem.id" class="media-list-box">
+					<li v-for="dataItem in dataList" :key="dataItem.id" class="media-list-box">
 						<a class="item-content">
 							<div class="item-media">
 								<img :src="dataItem.userPic">

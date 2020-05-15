@@ -8,12 +8,12 @@
 			</div>
 		</div>
 		<div class="slider-group">
-			<div class="slider-item" v-for="(typeItem, index) in typeList" :class="{active: index===currentTypeIndex}">
+			<div class="slider-item" v-for="(typeItem, index) in typeList" :key="index" :class="{active: index===currentTypeIndex}">
 				<div class="scroll-wrapper">
 					<list-pull-loading :options="options[index]" v-if="typeItem.materialsList">
-						<template slot="list">
+						<template v-slot:list>
 							<ul class="media-list">
-								<li v-for="(dataItem,dataIndex) in typeItem.materialsList" :key="dataItem.id" class="media-list-box">
+								<li v-for="dataItem in typeItem.materialsList" :key="dataItem.id" class="media-list-box">
 									<a>
 										<img v-lazy="dataItem.imgUrl">
 										<div class="item-media-body">

@@ -71,6 +71,8 @@
 						</div>
 					</div>
 				</slot>
+				<!-- 默认展示的内容 -->
+				<slot></slot>
 				<!-- 数据列表 -->
 				<slot name="list" v-if="hasData"></slot>
 				<slot name="nodata" v-else>
